@@ -129,7 +129,7 @@ export default function ForgotPasswordPage() {
               <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
                 <SparklesIcon />
               </div>
-              <h1 className="text-2xl font-semibold text-foreground">AI Chat</h1>
+              <h1 className="text-2xl font-semibold text-foreground">Artho</h1>
             </div>
             <h2 className="text-xl font-medium text-foreground mb-2">Forgot your password?</h2>
             <p className="text-muted-foreground">

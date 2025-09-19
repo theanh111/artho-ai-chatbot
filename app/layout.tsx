@@ -10,9 +10,9 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: "AI Chat - Powered by AI SDK",
-  description: "Modern chat interface powered by Vercel AI SDK",
-  generator: "v0.app",
+  title: "Artho",
+  description: "Modern chat interface powered by Artho",
+  generator: "Artho",
 }
 
 export default function RootLayout({

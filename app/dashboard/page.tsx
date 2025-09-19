@@ -125,7 +125,7 @@ export default function UserDashboard() {
       <div className="container mx-auto px-4 py-8">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-foreground mb-2 drop-shadow-lg">Welcome back, {user.name}</h1>
-          <p className="text-muted-foreground drop-shadow-sm">Here's your AI chat activity and insights</p>
+          <p className="text-muted-foreground drop-shadow-sm">Here's your Artho activity and insights</p>
         </div>
 
         <Tabs defaultValue="overview" className="space-y-6">
