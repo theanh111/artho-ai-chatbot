@@ -43,13 +43,40 @@ const UserIcon = () => (
 )
 
 const SparklesIcon = () => (
-  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth={2}
-      d="M5 3l1.5 1.5L5 6l-1.5-1.5L5 3zM19 3l1.5 1.5L19 6l-1.5-1.5L19 3zM12 8l1.5 1.5L12 11l-1.5-1.5L12 8zM5 21l1.5-1.5L5 18l-1.5 1.5L5 21zM19 21l1.5-1.5L19 18l-1.5 1.5L19 21z"
-    />
+  <svg
+    className="w-6 h-6"
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+  >
+    <defs>
+      <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style={{ stopColor: "#E3F2FD" }} />
+        <stop offset="100%" style={{ stopColor: "#BBDEFB" }} />
+      </linearGradient>
+      <linearGradient id="textGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" style={{ stopColor: "#1976D2" }} />
+        <stop offset="100%" style={{ stopColor: "#0D47A1" }} />
+      </linearGradient>
+      <filter id="textShadow" x="-50%" y="-50%" width="200%" height="200%">
+        <feDropShadow dx="0" dy="0.5" stdDeviation="0.5" floodColor="#000" floodOpacity="0.3" />
+      </filter>
+    </defs>
+
+    <circle cx="12" cy="12" r="11" fill="url(#bgGrad)" />
+
+    <text
+      x="12"
+      y="12"
+      fontFamily="Inter, 'Segoe UI', Roboto, sans-serif"
+      fontSize="14"
+      fontWeight="700"
+      fill="url(#textGrad)"
+      textAnchor="middle"
+      dominantBaseline="middle"
+      filter="url(#textShadow)"
+    >
+      A
+    </text>
   </svg>
 )
 
@@ -157,7 +184,7 @@ export default function ChatPage() {
                 <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center shadow-lg shadow-primary/25 hover:shadow-primary/40 transition-all duration-200">
                   <SparklesIcon />
                 </div>
-                <h1 className="text-xl font-semibold text-foreground drop-shadow-sm">AI Chat</h1>
+                <Link href="/" className="text-xl font-semibold text-foreground drop-shadow-sm">Artho</Link>
               </div>
 
               <nav className="hidden md:flex items-center gap-6 ml-8">
@@ -183,7 +210,6 @@ export default function ChatPage() {
             </div>
 
             <div className="flex items-center gap-2 md:gap-4">
-              <div className="hidden sm:block text-sm text-muted-foreground drop-shadow-sm">Powered by AI SDK</div>
 
               {user.isLoggedIn ? (
                 <div className="flex items-center gap-1 md:gap-2">
@@ -325,11 +351,10 @@ export default function ChatPage() {
                   )}
 
                   <Card
-                    className={`max-w-[85%] md:max-w-[80%] p-3 md:p-4 shadow-lg hover:shadow-xl transition-all duration-200 backdrop-blur-sm border-border/50 ${
-                      message.role === "user"
-                        ? "bg-primary/90 text-primary-foreground shadow-primary/20 hover:shadow-primary/30"
-                        : "bg-card/80 shadow-black/5 hover:shadow-black/10"
-                    }`}
+                    className={`max-w-[85%] md:max-w-[80%] p-3 md:p-4 shadow-lg hover:shadow-xl transition-all duration-200 backdrop-blur-sm border-border/50 ${message.role === "user"
+                      ? "bg-primary/90 text-primary-foreground shadow-primary/20 hover:shadow-primary/30"
+                      : "bg-card/80 shadow-black/5 hover:shadow-black/10"
+                      }`}
                   >
                     <div className="prose prose-sm max-w-none dark:prose-invert">
                       <div className="whitespace-pre-wrap leading-relaxed text-sm md:text-base drop-shadow-sm">
