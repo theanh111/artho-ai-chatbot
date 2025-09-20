@@ -152,7 +152,7 @@ export default function DownloadPage() {
 
               <div className="flex items-center gap-2">
                 <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center shadow-lg shadow-primary/25 hover:shadow-primary/40 transition-all duration-200">
-                  <SparklesIcon />
+                  <Link href="/" ><SparklesIcon /></Link>
                 </div>
                 <Link href="/" className="text-xl font-semibold text-foreground drop-shadow-sm">Artho</Link>
               </div>

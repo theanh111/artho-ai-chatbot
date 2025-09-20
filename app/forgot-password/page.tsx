@@ -8,8 +8,40 @@ import { Card } from "@/components/ui/card"
 import Link from "next/link"
 
 const SparklesIcon = () => (
-  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3l14 9-14 9V3z" />
+  <svg
+    className="w-6 h-6"
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+  >
+    <defs>
+      <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" style={{ stopColor: "#E3F2FD" }} />
+        <stop offset="100%" style={{ stopColor: "#BBDEFB" }} />
+      </linearGradient>
+      <linearGradient id="textGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" style={{ stopColor: "#1976D2" }} />
+        <stop offset="100%" style={{ stopColor: "#0D47A1" }} />
+      </linearGradient>
+      <filter id="textShadow" x="-50%" y="-50%" width="200%" height="200%">
+        <feDropShadow dx="0" dy="0.5" stdDeviation="0.5" floodColor="#000" floodOpacity="0.3" />
+      </filter>
+    </defs>
+
+    <circle cx="12" cy="12" r="11" fill="url(#bgGrad)" />
+
+    <text
+      x="12"
+      y="12"
+      fontFamily="Inter, 'Segoe UI', Roboto, sans-serif"
+      fontSize="14"
+      fontWeight="700"
+      fill="url(#textGrad)"
+      textAnchor="middle"
+      dominantBaseline="middle"
+      filter="url(#textShadow)"
+    >
+      A
+    </text>
   </svg>
 )
 
@@ -127,9 +159,9 @@ export default function ForgotPasswordPage() {
           <div className="text-center mb-8">
             <div className="flex items-center justify-center gap-2 mb-4">
               <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
-                <SparklesIcon />
+                <Link href="/" ><SparklesIcon /></Link>
               </div>
-              <h1 className="text-2xl font-semibold text-foreground">Artho</h1>
+              <Link href="/" className="text-3xl font-semibold text-foreground drop-shadow-sm">Artho</Link>
             </div>
             <h2 className="text-xl font-medium text-foreground mb-2">Forgot your password?</h2>
             <p className="text-muted-foreground">
@@ -144,7 +176,6 @@ export default function ForgotPasswordPage() {
                 Email address
               </label>
               <div className="relative">
-                <MailIcon />
                 <Input
                   id="email"
                   type="email"

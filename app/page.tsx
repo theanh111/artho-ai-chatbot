@@ -8,26 +8,19 @@ import { Input } from "@/components/ui/input"
 import { Card } from "@/components/ui/card"
 import { useState } from "react"
 
+import { GoogleGenAI } from "@google/genai";
+
 type Message = {
   id: string
   role: "user" | "assistant"
   content: string
 }
 
+
+
 const SendIcon = () => (
   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-  </svg>
-)
-
-const BotIcon = () => (
-  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth={2}
-      d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-    />
   </svg>
 )
 
@@ -125,6 +118,8 @@ const XIcon = () => (
   </svg>
 )
 
+const ai = new GoogleGenAI({ apiKey: "AIzaSyDVg9FUoN8ATf3LiXZQz33Cf7sEVOsBXko" });
+
 export default function ChatPage() {
   const [input, setInput] = useState("")
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
@@ -135,6 +130,15 @@ export default function ChatPage() {
     name: "",
     role: null,
   })
+
+  const askGemini = async (content: string): Promise<string> => {
+    const response = await ai.models.generateContent({
+      model: "gemini-2.5-flash",
+      contents: content,
+    });
+
+    return response.text ?? ""
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -150,17 +154,24 @@ export default function ChatPage() {
     setInput("")
     setIsLoading(true)
 
-    // Mock AI response
-    setTimeout(() => {
+    try {
+      const answer = await askGemini(userMessage.content)
       const aiMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: "assistant",
-        content:
-          "I'm a demo AI assistant. The full AI functionality will be available once the backend is properly configured!",
+        content: answer,
       }
       setMessages((prev) => [...prev, aiMessage])
+    } catch (err) {
+      const aiMessage: Message = {
+        id: (Date.now() + 1).toString(),
+        role: "assistant",
+        content: "Sorry, I couldn't get a response right now.",
+      }
+      setMessages((prev) => [...prev, aiMessage])
+    } finally {
       setIsLoading(false)
-    }, 1000)
+    }
   }
 
   return (
@@ -182,7 +193,7 @@ export default function ChatPage() {
 
               <div className="flex items-center gap-2">
                 <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center shadow-lg shadow-primary/25 hover:shadow-primary/40 transition-all duration-200">
-                  <SparklesIcon />
+                  <Link href="/" ><SparklesIcon /></Link>
                 </div>
                 <Link href="/" className="text-xl font-semibold text-foreground drop-shadow-sm">Artho</Link>
               </div>
@@ -312,7 +323,7 @@ export default function ChatPage() {
             {messages.length === 0 ? (
               <div className="flex flex-col items-center justify-center h-full text-center space-y-4 px-4">
                 <div className="w-16 h-16 bg-muted/80 backdrop-blur-sm rounded-full flex items-center justify-center shadow-xl shadow-black/10 hover:shadow-2xl hover:scale-110 transition-all duration-300 border border-border/20">
-                  <BotIcon />
+                  <SparklesIcon />
                 </div>
                 <div className="space-y-2">
                   <h2 className="text-xl md:text-2xl font-semibold text-foreground drop-shadow-md">
@@ -346,7 +357,7 @@ export default function ChatPage() {
                 >
                   {message.role === "assistant" && (
                     <div className="w-6 h-6 md:w-8 md:h-8 bg-primary rounded-full flex items-center justify-center flex-shrink-0 mt-1 shadow-lg shadow-primary/25 hover:shadow-primary/40 transition-all duration-200">
-                      <BotIcon />
+                      <SparklesIcon />
                     </div>
                   )}
 
@@ -375,7 +386,7 @@ export default function ChatPage() {
             {isLoading && (
               <div className="flex gap-3 justify-start">
                 <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center flex-shrink-0 mt-1 shadow-lg shadow-primary/25 animate-pulse">
-                  <BotIcon />
+                  <SparklesIcon />
                 </div>
                 <Card className="bg-card/80 backdrop-blur-sm p-4 shadow-lg border-border/50">
                   <div className="flex items-center gap-2 text-muted-foreground">
@@ -384,7 +395,7 @@ export default function ChatPage() {
                       <div className="w-2 h-2 bg-current rounded-full animate-bounce [animation-delay:-0.15s] drop-shadow-sm"></div>
                       <div className="w-2 h-2 bg-current rounded-full animate-bounce drop-shadow-sm"></div>
                     </div>
-                    <span className="text-sm drop-shadow-sm">AI is thinking...</span>
+                    <span className="text-sm drop-shadow-sm">Artho AI is thinking...</span>
                   </div>
                 </Card>
               </div>
@@ -395,7 +406,7 @@ export default function ChatPage() {
             <Input
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder="Type your message..."
+              placeholder="Ask everything..."
               disabled={isLoading}
               className="flex-1 bg-card/80 backdrop-blur-sm border-border/50 focus:ring-2 focus:ring-primary/20 text-sm md:text-base shadow-lg hover:shadow-xl focus:shadow-xl transition-all duration-200"
             />
