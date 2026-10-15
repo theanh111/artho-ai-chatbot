@@ -10,6 +10,7 @@ export async function POST(request: Request) {
     model: "gemini-2.5-flash",
     contents: content,
   });
-  console.log("askGemini response:", response);
+
+  console.log("askGemini response:", response.text);
   return Response.json({ text: response.text ?? "" });
 }

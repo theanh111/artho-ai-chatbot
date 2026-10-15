@@ -8,6 +8,15 @@ import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import { useState } from "react";
 
+import rehypeDocument from "rehype-document";
+import rehypeFormat from "rehype-format";
+import rehypeStringify from "rehype-stringify";
+import remarkParse from "remark-parse";
+import remarkRehype from "remark-rehype";
+import remarkBreaks from "remark-breaks";
+import remarkGfm from "remark-gfm";
+import { unified } from "unified";
+
 type Message = {
   id: string;
   role: "user" | "assistant";
@@ -181,6 +190,18 @@ export default function ChatPage() {
     role: null,
   });
 
+  const handleMarkdownResponse = async (response: string) => {
+    console.log("Raw response from Gemini:", response);
+    const html = await unified()
+      .use(remarkParse)
+      .use(remarkGfm)
+      .use(remarkRehype)
+      .use(rehypeStringify)
+      .process(response);
+
+    return String(html);
+  };
+
   const askGemini = async (content: string) => {
     const response = await fetch("/api/assistant", {
       method: "POST",
@@ -190,8 +211,10 @@ export default function ChatPage() {
       body: JSON.stringify({ content }),
     });
     const data = await response.json();
-    console.log("askGemini response:", data);
-    return data.text ?? "Sorry, I couldn't get a response right now.";
+    return (
+      handleMarkdownResponse(data.text) ??
+      "Sorry, I couldn't get a response right now."
+    );
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -432,13 +455,16 @@ export default function ChatPage() {
                         : "bg-card/80 shadow-black/5 hover:shadow-black/10"
                     }`}
                   >
-                    <div className="prose prose-sm max-w-none dark:prose-invert">
+                    {/* <div className="prose prose-sm max-w-none dark:prose-invert">
                       <div className="whitespace-pre-wrap leading-relaxed text-sm md:text-base drop-shadow-sm">
-                        <div
-                          dangerouslySetInnerHTML={{ __html: message.content }}
-                        />
+                        
                       </div>
-                    </div>
+                    </div> */}
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: message.content || "",
+                      }}
+                    />
                   </Card>
 
                   {message.role === "user" && (
