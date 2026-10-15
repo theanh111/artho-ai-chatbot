@@ -182,12 +182,16 @@ export default function ChatPage() {
   });
 
   const askGemini = async (content: string) => {
-    const response = fetch("/api/assistant", {
+    const response = await fetch("/api/assistant", {
       method: "POST",
-
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({ content }),
     });
-    console.log("askGemini response:", response);
+    const data = await response.json();
+    console.log("askGemini response:", data);
+    return data.text ?? "Sorry, I couldn't get a response right now.";
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -430,7 +434,9 @@ export default function ChatPage() {
                   >
                     <div className="prose prose-sm max-w-none dark:prose-invert">
                       <div className="whitespace-pre-wrap leading-relaxed text-sm md:text-base drop-shadow-sm">
-                        {message.content}
+                        <div
+                          dangerouslySetInnerHTML={{ __html: message.content }}
+                        />
                       </div>
                     </div>
                   </Card>
