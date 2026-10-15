@@ -1,6 +1,6 @@
 # Artho AI Chatbot
 
-[url=https://ibb.co/XZ0hb54g][img]https://i.ibb.co/fY6h2NS5/artho-ai-chatbot-thumbnail.png[/img][/url]
+![Artho AI Chatbot Thumbnail](https://github.com/theanh111/artho-ai-chatbot/blob/master/public/artho-ai-chatbot-thumbnail.png)
 
 An AI-powered conversational web application designed to help users explore ideas, solve problems, write creatively, and get answers through a simple chat interface.
 
