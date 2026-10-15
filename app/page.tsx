@@ -1,31 +1,42 @@
-"use client"
+"use client";
 
-import type React from "react"
-import Link from "next/link"
+import type React from "react";
+import Link from "next/link";
 
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Card } from "@/components/ui/card"
-import { useState } from "react"
-
-import { GoogleGenAI } from "@google/genai";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Card } from "@/components/ui/card";
+import { useState } from "react";
 
 type Message = {
-  id: string
-  role: "user" | "assistant"
-  content: string
-}
-
-
+  id: string;
+  role: "user" | "assistant";
+  content: string;
+};
 
 const SendIcon = () => (
-  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+  <svg
+    className="w-4 h-4"
+    fill="none"
+    stroke="currentColor"
+    viewBox="0 0 24 24"
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={2}
+      d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
+    />
   </svg>
-)
+);
 
 const UserIcon = () => (
-  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+  <svg
+    className="w-4 h-4"
+    fill="none"
+    stroke="currentColor"
+    viewBox="0 0 24 24"
+  >
     <path
       strokeLinecap="round"
       strokeLinejoin="round"
@@ -33,7 +44,7 @@ const UserIcon = () => (
       d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
     />
   </svg>
-)
+);
 
 const SparklesIcon = () => (
   <svg
@@ -51,7 +62,13 @@ const SparklesIcon = () => (
         <stop offset="100%" style={{ stopColor: "#0D47A1" }} />
       </linearGradient>
       <filter id="textShadow" x="-50%" y="-50%" width="200%" height="200%">
-        <feDropShadow dx="0" dy="0.5" stdDeviation="0.5" floodColor="#000" floodOpacity="0.3" />
+        <feDropShadow
+          dx="0"
+          dy="0.5"
+          stdDeviation="0.5"
+          floodColor="#000"
+          floodOpacity="0.3"
+        />
       </filter>
     </defs>
 
@@ -71,10 +88,15 @@ const SparklesIcon = () => (
       A
     </text>
   </svg>
-)
+);
 
 const LoginIcon = () => (
-  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+  <svg
+    className="w-4 h-4"
+    fill="none"
+    stroke="currentColor"
+    viewBox="0 0 24 24"
+  >
     <path
       strokeLinecap="round"
       strokeLinejoin="round"
@@ -82,10 +104,15 @@ const LoginIcon = () => (
       d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"
     />
   </svg>
-)
+);
 
 const UserCircleIcon = () => (
-  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+  <svg
+    className="w-4 h-4"
+    fill="none"
+    stroke="currentColor"
+    viewBox="0 0 24 24"
+  >
     <path
       strokeLinecap="round"
       strokeLinejoin="round"
@@ -93,10 +120,15 @@ const UserCircleIcon = () => (
       d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z"
     />
   </svg>
-)
+);
 
 const ShieldIcon = () => (
-  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+  <svg
+    className="w-4 h-4"
+    fill="none"
+    stroke="currentColor"
+    viewBox="0 0 24 24"
+  >
     <path
       strokeLinecap="round"
       strokeLinejoin="round"
@@ -104,75 +136,93 @@ const ShieldIcon = () => (
       d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
     />
   </svg>
-)
+);
 
 const MenuIcon = () => (
-  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+  <svg
+    className="w-5 h-5"
+    fill="none"
+    stroke="currentColor"
+    viewBox="0 0 24 24"
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={2}
+      d="M4 6h16M4 12h16M4 18h16"
+    />
   </svg>
-)
+);
 
 const XIcon = () => (
-  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+  <svg
+    className="w-5 h-5"
+    fill="none"
+    stroke="currentColor"
+    viewBox="0 0 24 24"
+  >
+    <path
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={2}
+      d="M6 18L18 6M6 6l12 12"
+    />
   </svg>
-)
-
-const ai = new GoogleGenAI({ apiKey: "AIzaSyDVg9FUoN8ATf3LiXZQz33Cf7sEVOsBXko" });
+);
 
 export default function ChatPage() {
-  const [input, setInput] = useState("")
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const [messages, setMessages] = useState<Message[]>([])
-  const [isLoading, setIsLoading] = useState(false)
+  const [input, setInput] = useState("");
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [user] = useState({
     isLoggedIn: false,
     name: "",
     role: null,
-  })
+  });
 
-  const askGemini = async (content: string): Promise<string> => {
-    const response = await ai.models.generateContent({
-      model: "gemini-2.5-flash",
-      contents: content,
+  const askGemini = async (content: string) => {
+    const response = fetch("/api/assistant", {
+      method: "POST",
+
+      body: JSON.stringify({ content }),
     });
-
-    return response.text ?? ""
-  }
+    console.log("askGemini response:", response);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    if (!input.trim() || isLoading) return
+    e.preventDefault();
+    if (!input.trim() || isLoading) return;
 
     const userMessage: Message = {
       id: Date.now().toString(),
       role: "user",
       content: input,
-    }
+    };
 
-    setMessages((prev) => [...prev, userMessage])
-    setInput("")
-    setIsLoading(true)
+    setMessages((prev) => [...prev, userMessage]);
+    setInput("");
+    setIsLoading(true);
 
     try {
-      const answer = await askGemini(userMessage.content)
+      const answer = await askGemini(userMessage.content);
       const aiMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: "assistant",
         content: answer,
-      }
-      setMessages((prev) => [...prev, aiMessage])
+      };
+      setMessages((prev) => [...prev, aiMessage]);
     } catch (err) {
       const aiMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: "assistant",
         content: "Sorry, I couldn't get a response right now.",
-      }
-      setMessages((prev) => [...prev, aiMessage])
+      };
+      setMessages((prev) => [...prev, aiMessage]);
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   return (
     <div className="min-h-screen bg-background relative z-10">
@@ -193,9 +243,16 @@ export default function ChatPage() {
 
               <div className="flex items-center gap-2">
                 <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center shadow-lg shadow-primary/25 hover:shadow-primary/40 transition-all duration-200">
-                  <Link href="/" ><SparklesIcon /></Link>
+                  <Link href="/">
+                    <SparklesIcon />
+                  </Link>
                 </div>
-                <Link href="/" className="text-xl font-semibold text-foreground drop-shadow-sm">Artho</Link>
+                <Link
+                  href="/"
+                  className="text-xl font-semibold text-foreground drop-shadow-sm"
+                >
+                  Artho
+                </Link>
               </div>
 
               <nav className="hidden md:flex items-center gap-6 ml-8">
@@ -221,7 +278,6 @@ export default function ChatPage() {
             </div>
 
             <div className="flex items-center gap-2 md:gap-4">
-
               {user.isLoggedIn ? (
                 <div className="flex items-center gap-1 md:gap-2">
                   <Link href="/dashboard">
@@ -330,23 +386,27 @@ export default function ChatPage() {
                     Start a conversation
                   </h2>
                   <p className="text-muted-foreground max-w-md text-sm md:text-base drop-shadow-sm">
-                    Ask me anything! I'm here to help with questions, creative tasks, problem-solving, and more.
+                    Ask me anything! I'm here to help with questions, creative
+                    tasks, problem-solving, and more.
                   </p>
                 </div>
                 <div className="flex flex-wrap gap-2 justify-center max-w-sm md:max-w-none">
-                  {["Explain quantum computing", "Write a creative story", "Help with coding", "Plan a trip"].map(
-                    (suggestion) => (
-                      <Button
-                        key={suggestion}
-                        variant="outline"
-                        size="sm"
-                        onClick={() => setInput(suggestion)}
-                        className="text-xs md:text-sm px-2 md:px-3 bg-card/60 backdrop-blur-sm border-border/50 shadow-lg hover:shadow-xl hover:scale-105 hover:bg-card/80 transition-all duration-200"
-                      >
-                        {suggestion}
-                      </Button>
-                    ),
-                  )}
+                  {[
+                    "Explain quantum computing",
+                    "Write a creative story",
+                    "Help with coding",
+                    "Plan a trip",
+                  ].map((suggestion) => (
+                    <Button
+                      key={suggestion}
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setInput(suggestion)}
+                      className="text-xs md:text-sm px-2 md:px-3 bg-card/60 backdrop-blur-sm border-border/50 shadow-lg hover:shadow-xl hover:scale-105 hover:bg-card/80 transition-all duration-200"
+                    >
+                      {suggestion}
+                    </Button>
+                  ))}
                 </div>
               </div>
             ) : (
@@ -362,10 +422,11 @@ export default function ChatPage() {
                   )}
 
                   <Card
-                    className={`max-w-[85%] md:max-w-[80%] p-3 md:p-4 shadow-lg hover:shadow-xl transition-all duration-200 backdrop-blur-sm border-border/50 ${message.role === "user"
-                      ? "bg-primary/90 text-primary-foreground shadow-primary/20 hover:shadow-primary/30"
-                      : "bg-card/80 shadow-black/5 hover:shadow-black/10"
-                      }`}
+                    className={`max-w-[85%] md:max-w-[80%] p-3 md:p-4 shadow-lg hover:shadow-xl transition-all duration-200 backdrop-blur-sm border-border/50 ${
+                      message.role === "user"
+                        ? "bg-primary/90 text-primary-foreground shadow-primary/20 hover:shadow-primary/30"
+                        : "bg-card/80 shadow-black/5 hover:shadow-black/10"
+                    }`}
                   >
                     <div className="prose prose-sm max-w-none dark:prose-invert">
                       <div className="whitespace-pre-wrap leading-relaxed text-sm md:text-base drop-shadow-sm">
@@ -395,7 +456,9 @@ export default function ChatPage() {
                       <div className="w-2 h-2 bg-current rounded-full animate-bounce [animation-delay:-0.15s] drop-shadow-sm"></div>
                       <div className="w-2 h-2 bg-current rounded-full animate-bounce drop-shadow-sm"></div>
                     </div>
-                    <span className="text-sm drop-shadow-sm">Artho AI is thinking...</span>
+                    <span className="text-sm drop-shadow-sm">
+                      Artho AI is thinking...
+                    </span>
                   </div>
                 </Card>
               </div>
@@ -421,5 +484,5 @@ export default function ChatPage() {
         </div>
       </div>
     </div>
-  )
+  );
 }
