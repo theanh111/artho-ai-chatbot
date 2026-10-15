@@ -2,7 +2,7 @@
 
 An AI-powered conversational web application designed to help users explore ideas, solve problems, write creatively, and get answers through a simple chat interface.
 
-**Live Demo:** [artho-ai-chatbot.vercel.app](https://artho-ai-chatbot.vercel.app/)
+**Live Demo:** [artho-ai-chatbot-pearl.vercel.app](https://artho-ai-chatbot-pearl.vercel.app/)
 
 ## Overview
 
