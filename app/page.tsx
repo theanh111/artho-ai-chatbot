@@ -8,8 +8,6 @@ import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import { useState } from "react";
 
-import rehypeDocument from "rehype-document";
-import rehypeFormat from "rehype-format";
 import rehypeStringify from "rehype-stringify";
 import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
@@ -191,7 +189,6 @@ export default function ChatPage() {
   });
 
   const handleMarkdownResponse = async (response: string) => {
-    console.log("Raw response from Gemini:", response);
     const html = await unified()
       .use(remarkParse)
       .use(remarkGfm)
