@@ -11,6 +11,5 @@ export async function POST(request: Request) {
     contents: content,
   });
 
-  console.log("askGemini response:", response.text);
   return Response.json({ text: response.text ?? "" });
 }

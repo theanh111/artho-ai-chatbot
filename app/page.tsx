@@ -195,6 +195,7 @@ export default function ChatPage() {
     const html = await unified()
       .use(remarkParse)
       .use(remarkGfm)
+      .use(remarkBreaks)
       .use(remarkRehype)
       .use(rehypeStringify)
       .process(response);
@@ -455,12 +456,8 @@ export default function ChatPage() {
                         : "bg-card/80 shadow-black/5 hover:shadow-black/10"
                     }`}
                   >
-                    {/* <div className="prose prose-sm max-w-none dark:prose-invert">
-                      <div className="whitespace-pre-wrap leading-relaxed text-sm md:text-base drop-shadow-sm">
-                        
-                      </div>
-                    </div> */}
                     <div
+                      className="space-y-2 whitespace-pre-line"
                       dangerouslySetInnerHTML={{
                         __html: message.content || "",
                       }}
