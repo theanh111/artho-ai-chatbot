@@ -188,6 +188,22 @@ export default function ChatPage() {
     role: null,
   });
 
+  const profileUrl = process.env.NEXT_PUBLIC_UPWORK_PROFILE_URL!;
+
+  const logWelcomeMessage = () => {
+    return "Hi, I'm The Anh (John). Feel free to book me for your upcoming projects right here: ";
+  };
+
+  console.log(
+    "%cWelcome to the dev console!\n%c" +
+      logWelcomeMessage() +
+      "\n%c" +
+      profileUrl,
+    "color: #34d399; font-weight: 600; font-size: 18px;",
+    "color: #cbd5e1; font-style: italic;",
+    "color: #60a5fa; text-decoration: underline;",
+  );
+
   const handleMarkdownResponse = async (response: string) => {
     const html = await unified()
       .use(remarkParse)
