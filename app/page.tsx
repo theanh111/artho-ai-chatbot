@@ -268,7 +268,10 @@ export default function ChatPage() {
   return (
     <div className="min-h-screen bg-background relative z-10">
       {/* Header */}
-      <header className="border-b border-border/20 bg-card/30 backdrop-blur-md sticky top-0 z-50 shadow-lg shadow-black/5">
+      <header
+        role="banner"
+        className="border-b border-border/20 bg-card/30 backdrop-blur-md sticky top-0 z-50 shadow-lg shadow-black/5"
+      >
         <div className="max-w-4xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
@@ -284,7 +287,7 @@ export default function ChatPage() {
 
               <div className="flex items-center gap-2">
                 <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center shadow-lg shadow-primary/25 hover:shadow-primary/40 transition-all duration-200">
-                  <Link href="/">
+                  <Link href="/" aria-label="Artho Logo - Go to Home">
                     <SparklesIcon />
                   </Link>
                 </div>
@@ -296,22 +299,28 @@ export default function ChatPage() {
                 </Link>
               </div>
 
-              <nav className="hidden md:flex items-center gap-6 ml-8">
+              <nav
+                role="navigation"
+                className="hidden md:flex items-center gap-6 ml-8"
+              >
                 <Link
                   href="/about"
                   className="text-sm text-muted-foreground hover:text-foreground transition-all duration-200 hover:drop-shadow-sm hover:scale-105"
+                  aria-label="About Artho"
                 >
                   About
                 </Link>
                 <Link
                   href="/pricing"
                   className="text-sm text-muted-foreground hover:text-foreground transition-all duration-200 hover:drop-shadow-sm hover:scale-105"
+                  aria-label="View Pricing Plans"
                 >
                   Pricing
                 </Link>
                 <Link
                   href="/download"
                   className="text-sm text-muted-foreground hover:text-foreground transition-all duration-200 hover:drop-shadow-sm hover:scale-105"
+                  aria-label="Download Artho"
                 >
                   Download
                 </Link>
@@ -321,8 +330,9 @@ export default function ChatPage() {
             <div className="flex items-center gap-2 md:gap-4">
               {user.isLoggedIn ? (
                 <div className="flex items-center gap-1 md:gap-2">
-                  <Link href="/dashboard">
+                  <Link href="/dashboard" aria-label="Go to Dashboard">
                     <Button
+                      aria-label="Go to Dashboard"
                       variant="outline"
                       size="sm"
                       className="gap-1 md:gap-2 bg-card/50 backdrop-blur-sm border-border/50 text-xs md:text-sm px-2 md:px-3 shadow-md hover:shadow-lg hover:scale-105 transition-all duration-200"
@@ -333,8 +343,9 @@ export default function ChatPage() {
                   </Link>
 
                   {user.role === "admin" && (
-                    <Link href="/admin">
+                    <Link href="/admin" aria-label="Go to Admin Panel">
                       <Button
+                        aria-label="Go to Admin Panel"
                         variant="outline"
                         size="sm"
                         className="gap-1 md:gap-2 bg-card/50 backdrop-blur-sm border-red-500/30 text-red-400 hover:bg-red-500/10 text-xs md:text-sm px-2 md:px-3 shadow-md shadow-red-500/10 hover:shadow-lg hover:shadow-red-500/20 hover:scale-105 transition-all duration-200"
@@ -351,8 +362,9 @@ export default function ChatPage() {
                 </div>
               ) : (
                 <div className="flex items-center gap-2">
-                  <Link href="/login">
+                  <Link href="/login" aria-label="Sign In">
                     <Button
+                      aria-label="Sign In"
                       variant="ghost"
                       size="sm"
                       className="gap-1 md:gap-2 text-xs md:text-sm px-2 md:px-3 hover:bg-accent/50 hover:shadow-md transition-all duration-200 hover:scale-105"
@@ -361,8 +373,9 @@ export default function ChatPage() {
                       <span className="hidden sm:inline">Sign In</span>
                     </Button>
                   </Link>
-                  <Link href="/register">
+                  <Link href="/register" aria-label="Get Started">
                     <Button
+                      aria-label="Get Started"
                       size="sm"
                       className="gap-1 md:gap-2 text-xs md:text-sm px-2 md:px-3 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-200"
                     >
@@ -384,7 +397,10 @@ export default function ChatPage() {
             />
 
             <div className="md:hidden border-t border-border/20 bg-card/40 backdrop-blur-lg relative z-50 shadow-xl">
-              <nav className="max-w-4xl mx-auto px-4 py-4 space-y-2">
+              <nav
+                role="navigation"
+                className="max-w-4xl mx-auto px-4 py-4 space-y-2"
+              >
                 <Link
                   href="/about"
                   className="block text-sm text-muted-foreground hover:text-foreground hover:bg-accent/30 transition-all duration-200 py-3 px-2 rounded-md hover:shadow-md hover:scale-[1.02]"
@@ -439,6 +455,7 @@ export default function ChatPage() {
                     "Plan a trip",
                   ].map((suggestion) => (
                     <Button
+                      aria-label={`Use suggestion: ${suggestion}`}
                       key={suggestion}
                       variant="outline"
                       size="sm"
@@ -516,6 +533,7 @@ export default function ChatPage() {
               className="flex-1 bg-card/80 backdrop-blur-sm border-border/50 focus:ring-2 focus:ring-primary/20 text-sm md:text-base shadow-lg hover:shadow-xl focus:shadow-xl transition-all duration-200"
             />
             <Button
+              aria-label="Send message"
               type="submit"
               disabled={!input.trim() || isLoading}
               className="px-3 md:px-4 shadow-lg hover:shadow-xl hover:scale-105 transition-all duration-200"
