@@ -188,7 +188,7 @@ export default function ChatPage() {
     role: null,
   });
 
-  const profileUrl = process.env.NEXT_PUBLIC_UPWORK_PROFILE_URL!;
+  const profileUrl = process.env.UPWORK_PROFILE_URL!;
 
   const logWelcomeMessage = () => {
     return "Hi, I'm The Anh (John). Feel free to book me for your upcoming projects right here: ";
