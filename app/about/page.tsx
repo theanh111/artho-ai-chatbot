@@ -12,7 +12,7 @@ export default function AboutPage() {
     name: "",
     role: null,
   });
-  const profileUrl = process.env.UPWORK_PROFILE_URL!;
+  const profileUrl = process.env.NEXT_PUBLIC_UPWORK_PROFILE_URL!;
 
   const UserIcon = () => (
     <svg
